@@ -140,3 +140,11 @@ try {
 catch {
     Write-Error: "Failed to install Starship. Errors: $_"
 }
+# Neofetch Install
+try {
+    winget install -e --id nepnep.neofetch-win
+    Write-Host "Neofetch installed successfully."
+}
+catch {
+    Write-Error: "Failed to install Neofetch. Errors: $_"
+}

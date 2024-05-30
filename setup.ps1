@@ -70,7 +70,7 @@ try {
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
     $fontFamilies = (New-Object System.Drawing.Text.InstalledFontCollection).Families.Name
 
-    if ($fontFamilies -notcontains "RobotoMono NF") {
+    if ($fontFamilies -notcontains "RobotoMono Nerd Font") {
         $webClient = New-Object System.Net.WebClient
         $webClient.DownloadFileAsync((New-Object System.Uri("https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/RobotoMono.zip")), ".\RobotoMono.zip")
         
@@ -91,11 +91,11 @@ try {
     }
 }
 catch {
-    Write-Error "Failed to download or install the Roboto Mono font. Error: $_"
+    Write-Error "Failed to download or install the Roboto Mono Nerd Font. Error: $_"
 }
 
 # Final check and message to the user
-if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fontFamilies -contains "RobotoMono NF")) {
+if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fontFamilies -contains "RobotoMono Nerd Font")) {
     Write-Host "Setup completed successfully. Please restart your PowerShell session to apply changes."
 } else {
     Write-Warning "Setup completed with errors. Please check the error messages above."

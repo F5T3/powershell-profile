@@ -132,3 +132,11 @@ try {
 catch {
     Write-Error: "Failed to install GlazeWM. Errors: $_"
 }
+# Starship Install
+try {
+    winget install -e --id Starship.Starship
+    Write-Host "Starsip installed successfully."
+}
+catch {
+    Write-Error: "Failed to install Starship. Errors: $_"
+}

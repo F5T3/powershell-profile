@@ -72,7 +72,7 @@ try {
 
     if ($fontFamilies -notcontains "RobotoMono NF") {
         $webClient = New-Object System.Net.WebClient
-        $webClient.DownloadFileAsync((New-Object System.Uri("github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/RobotoMono.zip")), ".\RobotoMono.zip")
+        $webClient.DownloadFileAsync((New-Object System.Uri("https://www.github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/RobotoMono.zip")), ".\RobotoMono.zip")
         
         while ($webClient.IsBusy) {
             Start-Sleep -Seconds 2

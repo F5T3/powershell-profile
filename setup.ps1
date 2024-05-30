@@ -156,3 +156,11 @@ try {
 catch {
     Write-Error: "Failed to install Neovim. Errors: $_"
 }
+# Docker Install
+try {
+    winget install -e --id Docker.DockerDesktop
+    Write-Host "Docker installed successfully."
+}
+catch {
+    Write-Error: "Failed to install Docker. Errors: $_"
+}

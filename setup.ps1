@@ -70,7 +70,7 @@ try {
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
     $fontFamilies = (New-Object System.Drawing.Text.InstalledFontCollection).Families.Name
 
-    if ($fontFamilies -notcontains "CaskaydiaCove NF") {
+    if ($fontFamilies -notcontains "RobotoMono NF") {
         $webClient = New-Object System.Net.WebClient
         $webClient.DownloadFileAsync((New-Object System.Uri("https://github.com/ryanoasis/nerd-fonts/releases/download/latest/RobotoMono.zip")), ".\RobotoMono.zip")
         
@@ -95,7 +95,7 @@ catch {
 }
 
 # Final check and message to the user
-if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fontFamilies -contains "CaskaydiaCove NF")) {
+if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fontFamilies -contains "RobotoMono NF")) {
     Write-Host "Setup completed successfully. Please restart your PowerShell session to apply changes."
 } else {
     Write-Warning "Setup completed with errors. Please check the error messages above."

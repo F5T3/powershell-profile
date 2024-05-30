@@ -2,12 +2,12 @@
 
 A stylish and functional PowerShell profile that looks and feels almost as good as a Linux terminal.
 
-## ⚡ One Line Install (Elevated PowerShell Recommended)
+## ⚡ One Line Install (Administrator PowerShell Recommended)
 
 Execute the following command in an elevated PowerShell window to install the PowerShell profile:
 
 ```
-irm "https://github.com/ChrisTitusTech/powershell-profile/raw/main/setup.ps1" | iex
+irm "https://github.com/F5T3/powershell-profile/raw/main/setup.ps1" | iex
 ```
 
 ## 🛠️ Fix the Missing Font

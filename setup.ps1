@@ -148,3 +148,11 @@ try {
 catch {
     Write-Error: "Failed to install Neofetch. Errors: $_"
 }
+# Neovim Install
+try {
+    winget install -e --id Neovim.Neovim
+    Write-Host "Neovim installed successfully."
+}
+catch {
+    Write-Error: "Failed to install Neovim. Errors: $_"
+}

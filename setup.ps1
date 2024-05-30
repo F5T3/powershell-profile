@@ -124,3 +124,11 @@ try {
 catch {
     Write-Error "Failed to install zoxide. Error: $_"
 }
+# GlazeWM Install
+try {
+    winget install -e --id lars-berger.GlazeWM
+    Write-Host "GlazeWM installed successfully."
+}
+catch {
+    Write-Error: "Failed to install GlazeWM. Errors: $_"
+}

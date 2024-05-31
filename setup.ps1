@@ -101,8 +101,7 @@ try {
         $packageName = $package.Key
         $packageId = $package.Value
 
-        # Check if package is available in winget list
-        $packageInfo = winget list --id $packageId | Select-String -Quiet $packageId
+        $packageInfo = winget list --id $packageId
 
         if (-not $packageInfo) {
             $missingPackages += $packageName
@@ -110,12 +109,11 @@ try {
     }
 
     if ($missingPackages.Count -eq 0) {
-        Write-Output "All apps installed"
+        Write-Output "The apps are already installed"
     } else {
         foreach ($packageName in $missingPackages) {
             $packageId = $packages[$packageName]
 
-            # Attempt to install the missing package using the appropriate package manager
             winget install --id $packageId
         }
         $installed = ($missingPackages -join ", ") -replace ",([^,]+)$"," and`$1"

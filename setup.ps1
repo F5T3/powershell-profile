@@ -97,14 +97,11 @@ try {
     $packages = @("Zoxide", "Starship", "Neovim", "Terminal-Icon", "Neofetch", "Everything", "EverythingToolbar", "Docker", "GlazeWM", "Oh My Posh", "Chocolatey", "Shell")
     $missingPackages = @()
 
-    foreach ($package in $packages.GetEnumerator()) {
-        $packageName = $package.Key
-        $packageId = $package.Value
-
-        $packageInfo = winget list --id $packageId
+    foreach ($package in $packages) {
+        $packageInfo = winget list --id $package
 
         if (-not $packageInfo) {
-            $missingPackages += $packageName
+            $missingPackages += $package
         }
     }
 
@@ -112,9 +109,7 @@ try {
         Write-Output "The apps are already installed"
     } else {
         foreach ($packageName in $missingPackages) {
-            $packageId = $packages[$packageName]
-
-            winget install --id $packageId
+            winget install --id $packageName
         }
         $installed = ($missingPackages -join ", ") -replace ",([^,]+)$"," and`$1"
         Write-Output "The apps, $installed got installed"

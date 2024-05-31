@@ -2,7 +2,7 @@
 ### Version 1.03 - Refactored
 
 # Initial GitHub.com connectivity check with 1 second timeout
-$canConnectToGitHub = Test-Connection github.com -Count 1 -Quiet -TimeoutSeconds 1
+$canConnectToGitHub = Test-Connection github.com -Count 1 -Quiet -TimeoutSeconds 5
 
 # Import Modules and External Profiles
 # Ensure Terminal-Icons module is installed before importing
@@ -18,7 +18,7 @@ if (Test-Path($ChocolateyProfile)) {
 # Check for Profile Updates
 function Update-Profile {
     if (-not $global:canConnectToGitHub) {
-        Write-Host "Skipping profile update check due to GitHub.com not responding within 1 second." -ForegroundColor Yellow
+        Write-Host "Skipping profile update check due to GitHub.com not responding within 5 second." -ForegroundColor Yellow
         return
     }
 

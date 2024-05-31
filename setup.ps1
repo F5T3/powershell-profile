@@ -121,9 +121,9 @@ function InstallPackages {
             } elseif ($package -eq "Neofetch") {
                 winget install neofetch 
             } elseif ($package -eq "Everything") {
-                winget install --id voidtools.Everything
+                winget install -e --id voidtools.Everything
             } elseif ($package -eq "EverythingToolbar") {
-                winget install --id stnkl.EverythingToolbar
+                winget install -e --id stnkl.EverythingToolbar
             } elseif ($package -eq "Docker") {
                 winget install docker
             } elseif ($package -eq "GlazeWM") {

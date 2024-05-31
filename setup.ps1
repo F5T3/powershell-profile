@@ -127,6 +127,7 @@ try {
     winget install voidtools.Everything
     winget install stnkl.EverythingToolbar
     Write-Host "Succesfully installed all apps."
+}
 catch {
     Write-Error: "Failed to installc all apps. Errors: $_"
 }

@@ -94,7 +94,7 @@ if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fo
 }
 #Install packages
 try {
-    $packages = @("Zoxide", "Starship", "Neovim", "Terminal-Icon", "Neofetch", "Everything", "EverythingToolbar", "Docker", "GlazeWM", "Oh My Posh", "Chocolatey")
+    $packages = @("Zoxide", "Starship", "Neovim", "Terminal-Icon", "Neofetch", "Everything", "EverythingToolbar", "Docker", "GlazeWM", "Oh My Posh", "Chocolatey", "Shell")
     $installedPackages = @()
     $missingPackages = @()
 
@@ -133,7 +133,9 @@ try {
                 winget install -e --accept-source-agreements --accept-package-agreements OhMyPosh
             } elseif ($package -eq "Chocolatey") {
                 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-            } 
+            } elseif ($package -eq "Shell") {
+                winget install nilesoft.shell
+            }
         }
         $installed = $missingPackages -join ", "
         Write-Output "The apps, $installed got installed"

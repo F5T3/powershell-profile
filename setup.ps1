@@ -95,49 +95,30 @@ if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fo
 #Install packages
 try {
     $packages = @("Zoxide", "Starship", "Neovim", "Terminal-Icon", "Neofetch", "Everything", "EverythingToolbar", "Docker", "GlazeWM", "Oh My Posh", "Chocolatey", "Shell")
-    $installedPackages = @()
     $missingPackages = @()
 
-    foreach ($package in $packages) {
-        if (-not (Get-Command $package -ErrorAction SilentlyContinue)) {
-            $missingPackages += $package
-        } else {
-            $installedPackages += $package
+    foreach ($package in $packages.GetEnumerator()) {
+        $packageName = $package.Key
+        $packageId = $package.Value
+
+        # Check if package is available in winget list
+        $packageInfo = winget list --id $packageId | Select-String -Quiet $packageId
+
+        if (-not $packageInfo) {
+            $missingPackages += $packageName
         }
     }
 
     if ($missingPackages.Count -eq 0) {
-        Write-Output "The apps are already installed"
+        Write-Output "All apps installed"
     } else {
-        foreach ($package in $missingPackages) {
+        foreach ($packageName in $missingPackages) {
+            $packageId = $packages[$packageName]
+
             # Attempt to install the missing package using the appropriate package manager
-            if ($package -eq "Zoxide") {
-                Install-Package -Name zoxide -Source winget -Force
-            } elseif ($package -eq "Starship") {
-                winget install starship
-            } elseif ($package -eq "Neovim") {
-                winget install neovim
-            } elseif ($package -eq "Terminal-Icon") {
-                Install-Module -Name Terminal-Icons -Repository PSGallery -Force
-            } elseif ($package -eq "Neofetch") {
-                winget install neofetch 
-            } elseif ($package -eq "Everything") {
-                winget install -e --id voidtools.Everything
-            } elseif ($package -eq "EverythingToolbar") {
-                winget install -e --id stnkl.EverythingToolbar
-            } elseif ($package -eq "Docker") {
-                winget install docker
-            } elseif ($package -eq "GlazeWM") {
-                winget install GlazeWM
-            } elseif ($package -eq "Oh My Posh") {
-                winget install -e --accept-source-agreements --accept-package-agreements OhMyPosh
-            } elseif ($package -eq "Chocolatey") {
-                Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-            } elseif ($package -eq "Shell") {
-                winget install nilesoft.shell
-            }
+            winget install --id $packageId
         }
-        $installed = $missingPackages -join ", "
+        $installed = ($missingPackages -join ", ") -replace ",([^,]+)$"," and`$1"
         Write-Output "The apps, $installed got installed"
     }
 }

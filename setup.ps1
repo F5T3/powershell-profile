@@ -115,5 +115,13 @@ try {
     Write-Host "Succesfully installed all apps."
 }
 catch {
-    Write-Error: "Failed to installc all apps. Errors: $_"
+    Write-Error: "Failed to install all apps. Errors: $_"
+}
+# ZOxied instal
+try {
+    winget install -e --id ajeetdsouza.zoxide
+    Write-Host "Succesfully installed zoxide."
+}
+catch {
+    Write-Error: "Failed to install zoxide. Errors: $_"
 }

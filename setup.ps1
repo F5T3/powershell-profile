@@ -134,7 +134,7 @@ function InstallPackages {
                 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
             } 
         }
-        $installed = $missingPackages -join ", "
+        $installed = ($missingPackages -join ", ") -replace ",([^,]+)$"," and`$1"
         Write-Output "The apps, $installed got installed"
     }
 }

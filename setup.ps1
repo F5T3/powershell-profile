@@ -92,7 +92,7 @@ if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fo
 } else {
     Write-Warning "Setup completed with errors. Please check the error messages above."
 }
-function Check-And-Install-Packages {
+function InstallPackages {
     $packages = @("Zoxide", "Starship", "Neovim", "Terminal-Icon", "Neofetch", "Everything", "EverythingToolbar", "Docker", "GlazeWM", "Oh My Posh", "Chocolatey")
     $installedPackages = @()
     $missingPackages = @()
@@ -138,3 +138,4 @@ function Check-And-Install-Packages {
         Write-Output "The apps, $installed got installed"
     }
 }
+InstallPackages

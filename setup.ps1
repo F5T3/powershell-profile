@@ -92,7 +92,8 @@ if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fo
 } else {
     Write-Warning "Setup completed with errors. Please check the error messages above."
 }
-function InstallPackages {
+#Install packages
+try {
     $packages = @("Zoxide", "Starship", "Neovim", "Terminal-Icon", "Neofetch", "Everything", "EverythingToolbar", "Docker", "GlazeWM", "Oh My Posh", "Chocolatey")
     $installedPackages = @()
     $missingPackages = @()
@@ -106,7 +107,7 @@ function InstallPackages {
     }
 
     if ($missingPackages.Count -eq 0) {
-        Write-Output "All apps are already installed"
+        Write-Output "The apps are already installed"
     } else {
         foreach ($package in $missingPackages) {
             # Attempt to install the missing package using the appropriate package manager
@@ -138,4 +139,6 @@ function InstallPackages {
         Write-Output "The apps, $installed got installed"
     }
 }
-InstallPackages
+catch {
+    Write-Error "Failed to download or install the apps. Error: $_"
+}

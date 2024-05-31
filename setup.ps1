@@ -92,29 +92,49 @@ if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fo
 } else {
     Write-Warning "Setup completed with errors. Please check the error messages above."
 }
+function Check-And-Install-Packages {
+    $packages = @("Zoxide", "Starship", "Neovim", "Terminal-Icon", "Neofetch", "Everything", "EverythingToolbar", "Docker", "GlazeWM", "Oh My Posh", "Chocolatey")
+    $installedPackages = @()
+    $missingPackages = @()
 
-# Module Install
-try {
-    Install-Module -Name Terminal-Icons -Repository PSGallery -Force
-}
-catch {
-    Write-Error "Failed to install Terminal Icons module. Error: $_"
-}
-# App INSTALLL Install
-try {
-    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-    winget install -e --accept-source-agreements --accept-package-agreements JanDeDobbeleer.OhMyPosh
-    winget install -e --id ajeetdsouza.zoxide
-    winget install -e --id lars-berger.GlazeWM
-    winget install -e --id Starship.Starship
-    winget install -e --id nepnep.neofetch-win
-    winget install -e --id Neovim.Neovim
-    winget install -e --id Docker.DockerDesktop
-    winget install voidtools.Everything
-    winget install stnkl.EverythingToolbar
-    winget install -e --id ajeetdsouza.zoxide
-    Write-Host "Succesfully installed all apps."
-}
-catch {
-    Write-Error: "Failed to install all apps. Errors: $_"
+    foreach ($package in $packages) {
+        if (-not (Get-Command $package -ErrorAction SilentlyContinue)) {
+            $missingPackages += $package
+        } else {
+            $installedPackages += $package
+        }
+    }
+
+    if ($missingPackages.Count -eq 0) {
+        Write-Output "All apps are already installed"
+    } else {
+        foreach ($package in $missingPackages) {
+            # Attempt to install the missing package using the appropriate package manager
+            if ($package -eq "Zoxide") {
+                Install-Package -Name zoxide -Source winget -Force
+            } elseif ($package -eq "Starship") {
+                winget install starship
+            } elseif ($package -eq "Neovim") {
+                winget install neovim
+            } elseif ($package -eq "Terminal-Icon") {
+                Install-Module -Name Terminal-Icons -Repository PSGallery -Force
+            } elseif ($package -eq "Neofetch") {
+                winget install neofetch 
+            } elseif ($package -eq "Everything") {
+                winget install Everything
+            } elseif ($package -eq "EverythingToolbar") {
+                winget install EverythingToolbar
+            } elseif ($package -eq "Docker") {
+                winget install docker
+            } elseif ($package -eq "GlazeWM") {
+                winget install GlazeWM
+            } elseif ($package -eq "Oh My Posh") {
+                winget install -e --accept-source-agreements --accept-package-agreements OhMyPosh
+            } elseif ($package -eq "Chocolatey") {
+                Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+            } 
+        }
+        $installed = $missingPackages -join ", "
+        Write-Output "The apps, $installed got installed"
+    }
 }

@@ -57,14 +57,6 @@ else {
     }
 }
 
-# OMP Install
-try {
-    winget install -e --accept-source-agreements --accept-package-agreements JanDeDobbeleer.OhMyPosh
-}
-catch {
-    Write-Error "Failed to install Oh My Posh. Error: $_"
-}
-
 # Font Install
 try {
     [void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
@@ -101,14 +93,6 @@ if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fo
     Write-Warning "Setup completed with errors. Please check the error messages above."
 }
 
-# Choco install
-try {
-    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-}
-catch {
-    Write-Error "Failed to install Chocolatey. Error: $_"
-}
-
 # Module Install
 try {
     Install-Module -Name Terminal-Icons -Repository PSGallery -Force
@@ -118,6 +102,8 @@ catch {
 }
 # App INSTALLL Install
 try {
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    winget install -e --accept-source-agreements --accept-package-agreements JanDeDobbeleer.OhMyPosh
     winget install -e --id ajeetdsouza.zoxide
     winget install -e --id lars-berger.GlazeWM
     winget install -e --id Starship.Starship

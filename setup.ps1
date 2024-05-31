@@ -1,6 +1,6 @@
 # Ensure the script can run with elevated privileges
 if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Warning "Please run this script as an Administrator!"
+    Write-Warning "Please run this script as an Administrator!" -ForegroundColor Yellow
     break
 }
 
@@ -11,7 +11,7 @@ function Test-InternetConnection {
         return $true
     }
     catch {
-        Write-Warning "Internet connection is required but not available. Please check your connection."
+        Write-Warning "Internet connection is required but not available. Please check your connection." -ForegroundColor Yellow
         return $false
     }
 }
@@ -39,10 +39,10 @@ if (!(Test-Path -Path $PROFILE -PathType Leaf)) {
 
         Invoke-RestMethod https://github.com/F5T3/powershell-profile/raw/main/Microsoft.PowerShell_profile.ps1 -OutFile $PROFILE
         Write-Host "The profile @ [$PROFILE] has been created." -ForegroundColor Green
-        Write-Host "If you want to add any persistent components, please do so at [$profilePath\Profile.ps1] as there is an updater in the installed profile which uses the hash to update the profile and will lead to loss of changes"
+        Write-Host "If you want to add any persistent components, please do so at [$profilePath\Profile.ps1] as there is an updater in the installed profile which uses the hash to update the profile and will lead to loss of changes" -ForegroundColor Yellow
     }
     catch {
-        Write-Error "Failed to create or update the profile. Error: $_"
+        Write-Error "Failed to create or update the profile. Error: $_" -ForegroundColor red
     }
 }
 else {
@@ -50,10 +50,10 @@ else {
         Get-Item -Path $PROFILE | Move-Item -Destination "oldprofile.ps1" -Force
         Invoke-RestMethod https://github.com/F5T3/powershell-profile/raw/main/Microsoft.PowerShell_profile.ps1 -OutFile $PROFILE
         Write-Host "The profile @ [$PROFILE] and has replace the old profile." -ForegroundColor Green
-        Write-Host "Please back up any persistent components of your old profile to [$HOME\Documents\PowerShell\Profile.ps1] as there is an updater in the installed profile which uses the hash to update the profile and will lead to loss of changes"
+        Write-Host "Please back up any persistent components of your old profile to [$HOME\Documents\PowerShell\Profile.ps1] as there is an updater in the installed profile which uses the hash to update the profile and will lead to loss of changes" -ForegroundColor Yellow  
     }
     catch {
-        Write-Error "Failed to backup and update the profile. Error: $_"
+        Write-Error "Failed to backup and update the profile. Error: $_" -ForegroundColor Red
     }
 }
 
@@ -83,14 +83,14 @@ try {
     }
 }
 catch {
-    Write-Error "Failed to download or install the Roboto Mono Nerd Font. Error: $_"
+    Write-Error "Failed to download or install the Roboto Mono Nerd Font. Error: $_" -ForegroundColor Red
 }
 
 # Final check and message to the user
 if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fontFamilies -contains "RobotoMono Nerd Font")) {
-    Write-Host "Setup completed successfully. Please restart your PowerShell session to apply changes."
+    Write-Host "Setup completed successfully. Please restart your PowerShell session to apply changes." -ForegroundColor Green
 } else {
-    Write-Warning "Setup completed with errors. Please check the error messages above."
+    Write-Warning "Setup completed with errors. Please check the error messages above." -ForegroundColor Yeloow
 }
 #Install packages
 try {
@@ -106,15 +106,15 @@ try {
     }
 
     if ($missingPackages.Count -eq 0) {
-        Write-Output "The apps are already installed" -ForegroundColor Green
+        Write-Host "The apps are already installed" -ForegroundColor Green
     } else {
         foreach ($packageName in $missingPackages) {
             winget install --id $packageName
         }
         $installed = ($missingPackages -join ", ") -replace ",([^,]+)$"," and`$1"
-        Write-Output "The apps, $installed got installed"
+        Write-Host "The apps, $installed got installed" -ForegroundColor Green
     }
 }
 catch {
-    Write-Error "Failed to download or install the apps. Error: $_"
+    Write-Error "Failed to download or install the apps. Error: $_" -ForegroundColor Red
 }

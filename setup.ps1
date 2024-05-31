@@ -38,7 +38,7 @@ if (!(Test-Path -Path $PROFILE -PathType Leaf)) {
         }
 
         Invoke-RestMethod https://github.com/F5T3/powershell-profile/raw/main/Microsoft.PowerShell_profile.ps1 -OutFile $PROFILE
-        Write-Host "The profile @ [$PROFILE] has been created."
+        Write-Host "The profile @ [$PROFILE] has been created." -ForegroundColor Green
         Write-Host "If you want to add any persistent components, please do so at [$profilePath\Profile.ps1] as there is an updater in the installed profile which uses the hash to update the profile and will lead to loss of changes"
     }
     catch {
@@ -49,7 +49,7 @@ else {
     try {
         Get-Item -Path $PROFILE | Move-Item -Destination "oldprofile.ps1" -Force
         Invoke-RestMethod https://github.com/F5T3/powershell-profile/raw/main/Microsoft.PowerShell_profile.ps1 -OutFile $PROFILE
-        Write-Host "The profile @ [$PROFILE] and has replace the old profile."
+        Write-Host "The profile @ [$PROFILE] and has replace the old profile." -ForegroundColor Green
         Write-Host "Please back up any persistent components of your old profile to [$HOME\Documents\PowerShell\Profile.ps1] as there is an updater in the installed profile which uses the hash to update the profile and will lead to loss of changes"
     }
     catch {
@@ -106,7 +106,7 @@ try {
     }
 
     if ($missingPackages.Count -eq 0) {
-        Write-Output "The apps are already installed"
+        Write-Output "The apps are already installed" -ForegroundColor Green
     } else {
         foreach ($packageName in $missingPackages) {
             winget install --id $packageName

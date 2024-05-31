@@ -109,58 +109,24 @@ catch {
     Write-Error "Failed to install Chocolatey. Error: $_"
 }
 
-# Terminal Icons Install
+# Module Install
 try {
     Install-Module -Name Terminal-Icons -Repository PSGallery -Force
 }
 catch {
     Write-Error "Failed to install Terminal Icons module. Error: $_"
 }
-# zoxide Install
+# App INSTALLL Install
 try {
     winget install -e --id ajeetdsouza.zoxide
-    Write-Host "zoxide installed successfully."
-}
-catch {
-    Write-Error "Failed to install zoxide. Error: $_"
-}
-# GlazeWM Install
-try {
     winget install -e --id lars-berger.GlazeWM
-    Write-Host "GlazeWM installed successfully."
-}
-catch {
-    Write-Error: "Failed to install GlazeWM. Errors: $_"
-}
-# Starship Install
-try {
     winget install -e --id Starship.Starship
-    Write-Host "Starsip installed successfully."
-}
-catch {
-    Write-Error: "Failed to install Starship. Errors: $_"
-}
-# Neofetch Install
-try {
     winget install -e --id nepnep.neofetch-win
-    Write-Host "Neofetch installed successfully."
-}
-catch {
-    Write-Error: "Failed to install Neofetch. Errors: $_"
-}
-# Neovim Install
-try {
     winget install -e --id Neovim.Neovim
-    Write-Host "Neovim installed successfully."
-}
-catch {
-    Write-Error: "Failed to install Neovim. Errors: $_"
-}
-# Docker Install
-try {
     winget install -e --id Docker.DockerDesktop
-    Write-Host "Docker installed successfully."
-}
+    winget install voidtools.Everything
+    winget install stnkl.EverythingToolbar
+    Write-Host "Succesfully installed all apps."
 catch {
-    Write-Error: "Failed to install Docker. Errors: $_"
+    Write-Error: "Failed to installc all apps. Errors: $_"
 }

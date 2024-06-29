@@ -90,7 +90,7 @@ catch {
 if ((Test-Path -Path $PROFILE) -and (winget list --name "OhMyPosh" -e) -and ($fontFamilies -contains "RobotoMono Nerd Font")) {
     Write-Host "Setup completed successfully. Please restart your PowerShell session to apply changes." -ForegroundColor Green
 } else {
-    Write-Warning "Setup completed with errors. Please check the error messages above." -ForegroundColor Yellow
+    Write-Warning "Setup completed with errors. Please check the error messages above."
 }
 #Install packages
 try {
